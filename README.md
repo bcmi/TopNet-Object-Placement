@@ -17,8 +17,6 @@ Download and extract data from  [Baidu Cloud](https://pan.baidu.com/s/10JBpXBMZy
 
 ## Test
 
-## Multiple Foreground Scales
-
 ## Evalution on Discriminative Task
 
 ## Evalution on Generation Task
