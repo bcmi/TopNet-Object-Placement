@@ -45,3 +45,12 @@ python test.py --load_path <PATH_TO_MODEL>
 ## Evalution on Discriminative Task
 
 ## Evalution on Generation Task
+
+| Method   | Acc   | FID   |
+|----------|-------|-------|
+| TERSE    | 0.679 | 46.94 |
+| PlaceNet | 0.683 | 36.69 |
+| GracoNet | 0.847 | 27.75 |
+| IOPRE    | 0.895 | 21.59 |
+| FOPA     | 0.932 | 19.76 |
+
