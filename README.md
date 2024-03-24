@@ -53,4 +53,5 @@ python test.py --load_path <PATH_TO_MODEL>
 | GracoNet | 0.847 | 27.75 |
 | IOPRE    | 0.895 | 21.59 |
 | FOPA     | 0.932 | 19.76 |
+| **TopNet**   | **0.910** | **23.49** |
 
