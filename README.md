@@ -14,7 +14,10 @@ Download and extract data from  [Baidu Cloud](https://pan.baidu.com/s/10JBpXBMZy
   train(test)_pair_new.csv    # csv files
 ```
 ## Training
-
+Before training, modify "config.py" according to your need. After that, run:
+```
+python train.py
+```
 ## Test
 
 ## Evalution on Discriminative Task
