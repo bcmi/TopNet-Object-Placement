@@ -45,13 +45,13 @@ python test.py --load_path <PATH_TO_MODEL>
 ## Evalution on Discriminative Task
 
 ## Evalution on Generation Task
-
+Followed FOPA, given each background-foreground pair in the test set, we predict 16 rationality score maps for 16 foreground scales and generate composite images with top 50 rationality scores. Then, we randomly sample one from 50 generated composite images per background-foreground pair for Acc and FID evaluation, using the test scripts provided by GracoNet.
 | Method   | Acc   | FID   |
 |----------|-------|-------|
-| TERSE    | 0.679 | 46.94 |
-| PlaceNet | 0.683 | 36.69 |
-| GracoNet | 0.847 | 27.75 |
-| IOPRE    | 0.895 | 21.59 |
-| FOPA     | 0.932 | 19.76 |
+| [TERSE](https://arxiv.org/abs/1904.05475)    | 0.679 | 46.94 |
+| [PlaceNet](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123580562.pdf) | 0.683 | 36.69 |
+| [GracoNet](https://arxiv.org/abs/2207.11464) | 0.847 | 27.75 |
+| [IOPRE](https://openreview.net/pdf?id=hwHBaL7wur)    | 0.895 | 21.59 |
+| [FOPA](https://arxiv.org/abs/2205.14280)     | 0.932 | 19.76 |
 | **TopNet**   | **0.910** | **23.49** |
 
