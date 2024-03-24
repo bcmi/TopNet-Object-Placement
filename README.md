@@ -44,6 +44,7 @@ python test.py --load_path <PATH_TO_MODEL>
 ```
 ## Evalution on Discriminative Task
 We show the results on discriminate task compared with SOPA and FOPA.
+| Method   | F1   | bAcc   |
 |----------|-------|-------|
 | [SOPA](https://arxiv.org/abs/2107.01889)   | 0.780 | 0.842 |
 | [FOPA](https://arxiv.org/abs/2205.14280)     | 0.776 | 0.840 |
