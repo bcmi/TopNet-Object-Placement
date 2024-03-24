@@ -11,27 +11,14 @@ from data.all_transforms import Compose, JointResize
 
 class CPDataset(Dataset):
     def __init__(self, file, bg_dir, fg_dir, mask_dir, in_size, datatype='train'):
-        """
-        初始化数据集
-        Args:
-            file(str): 测试/训练数据信息存储的文件路径,
-            bg_dir(str): 背景图片存放的文件夹,
-            fg_dir(str): 背景图片存放的文件夹,
-            mask_dir(str): 背景图片存放的文件夹,
-            in_size(int): 图片resize的大小,
-            datatype(str): train/val, 指定加载的是训练集还是测试集,
-        """
-        # 从文件中加载数据信息
         self.datatype = datatype
         self.data = _collect_info(file, bg_dir, fg_dir, mask_dir, datatype)
         self.insize = in_size
-
-        # 对图片的处理
         self.train_triple_transform = Compose([JointResize(in_size)])
         self.train_img_transform = transforms.Compose(
             [
                 transforms.ToTensor(),
-                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),  # 处理的是Tensor
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]), 
             ]
         )
         self.train_mask_transform = transforms.ToTensor()
@@ -45,16 +32,6 @@ class CPDataset(Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        """
-        数据集加载单条数据
-        return:
-            i: 图片在数据集中的序号,
-            bg_t:(1 * 3 * in_size * in_size)背景图片特征,
-            mask_t:(1 * 1 * in_size * in_size)前景mask图片特征,
-            bg_t:(1 * 3 * in_size * in_size)前景物体图片特征,
-            target_t: (1 * in_size * in_size)对应GT标注的目标,
-            labels_num: (int) 该大小的前景-背景组合中有标注的位置数量
-        """
         i, bg_id, bg_path, fg_path, mask_path, scale, pos_label, neg_label, fg_path_2, mask_path_2, w, h = self.data[index] 
         fg_name =  fg_path.split('/')[-1][:-4]
         save_name = fg_name + '_' + str(scale) + '.jpg'
@@ -69,8 +46,6 @@ class CPDataset(Dataset):
         if len(mask.split()) == 3:
             mask = mask.convert("L")
 
-
-        # 制作合成图的部分，用于feature mimicking 
         fg_tocp = Image.open(fg_path_2).convert("RGB")
         mask_tocp = Image.open(mask_path_2).convert("L")
         composite_list = []
@@ -89,42 +64,26 @@ class CPDataset(Dataset):
         composite_list_ = torch.stack(composite_list, dim=0)
         composite_cat = torch.zeros(50 - len(composite_list), 4, 256, 256)
         composite_list = torch.cat((composite_list_, composite_cat), dim=0)
-
-        # 加载相应目标图, 合理位置为1, 不合理位置为0, 其余位置为255
-        # target用于计算loss,feature_pos指代256*256里标签的位置
         target, feature_pos = _obtain_target(bg_img.size[0], bg_img.size[1], self.insize, pos_label, neg_label, False)
         for i in range(50 - len(feature_pos)):
             feature_pos.append((0, 0)) 
         feature_pos = torch.Tensor(feature_pos)
-        
-        # 前景，背景等Resize 到256，并且转成tensor的格式，添加fixmatch的强弱增强
         bg_t, fg_t, mask_t = self.train_triple_transform(bg_img, fg_img, mask)
         mask_t = self.train_mask_transform(mask_t)
         fg_t = self.train_img_transform(fg_t)
         bg_t = self.train_img_transform(bg_t)
-        target_t = self.train_mask_transform(target) * 255 #变成tensor归一化到[0,1]，为了后续计算算回来
+        target_t = self.train_mask_transform(target) * 255 
         labels_num = (target_t != 255).sum()
         return i,bg_t, mask_t, fg_t, target_t.squeeze(), labels_num, composite_list, feature_pos, w, h, save_name
 
 
  
 def _obtain_target(original_width, original_height, in_size, pos_label, neg_label, isflip=False):
-    """
-    获得GT目标，这部分是把对应的0，1标签转到256*256上
-    Args:
-        original_width(int): 背景图原宽度
-        original_height(int): 背景图原高度
-        in_size(int): 背景图resize后的大小
-        pos_label(list): 有合理标注的原前景中心位置
-        neg_label(list): 有不合理标注的原前景中心位置
-    return:
-        target_r: 对应GT标注的目标
-    """
     target = np.uint8(np.ones((in_size, in_size)) * 255)
     feature_pos = []
     for pos in pos_label:
         x, y = pos
-        x_new = int(x * in_size / original_width) #直接取整
+        x_new = int(x * in_size / original_width) 
         y_new = int(y * in_size / original_height)
         target[y_new, x_new] = 1.
         if isflip:
@@ -145,34 +104,21 @@ def _obtain_target(original_width, original_height, in_size, pos_label, neg_labe
 
 
 def _collect_info(json_file, coco_dir, fg_dir, mask_dir, datatype='train'):
-    """
-    加载json文件, 返回数据信息以及相应路径
-    Args:
-        json_file(str): 测试/训练数据信息存储的文件路径,
-        coco_dir(str): 背景图片存放的文件夹,
-        fg_dir(str): 背景图片存放的文件夹,
-        mask_dir(str): 背景图片存放的文件夹,
-        datatype(str): train/val, 指定加载的是训练集还是测试集,
-    return:
-        index(int): 数据在json文件的序号,
-        背景图片的路径, 前景物体图片的路径, 前景mask图片路径,
-        前景图片scale, 合理的前景位置中心点坐标, 不合理的前景位置中心点坐标
-    """
     f_json = json.load(open(json_file, 'r'))
     return [
         (
             index,
             '{}'.format(row['scID']).rjust(12,'0'),
-            os.path.join(coco_dir, "%012d.jpg" % int(row['scID'])),  # background image path
-            os.path.join(fg_dir, "{}/{}_{}_{}_{}.jpg".format(datatype, int(row['annID']), int(row['scID']), #这个是和背景等大的前景
+            os.path.join(coco_dir, "%012d.jpg" % int(row['scID'])), 
+            os.path.join(fg_dir, "{}/{}_{}_{}_{}.jpg".format(datatype, int(row['annID']), int(row['scID']), 
                                                              int(row['newWidth']), int(row['newHeight']))),
             os.path.join(mask_dir, "{}/{}_{}_{}_{}.jpg".format(datatype, int(row['annID']), int(row['scID']),
                                                                int(row['newWidth']), int(row['newHeight']))),
             row['scale'],
             row['pos_label'], row['neg_label'],
-            os.path.join(fg_dir, "foreground/{}.jpg".format(int(row['annID']))),#这个初始的前景
+            os.path.join(fg_dir, "foreground/{}.jpg".format(int(row['annID']))),
             os.path.join(fg_dir, "foreground/mask_{}.jpg".format(int(row['annID']))),
-            int(row['newWidth']), int(row['newHeight']) # 按照scale防所得到的前景的新的长和宽
+            int(row['newWidth']), int(row['newHeight']) 
         )
         for index, row in enumerate(f_json)
     ]
@@ -195,7 +141,6 @@ def make_composite(fg_img, mask_img, bg_img, pos, isflip=False):
     x, y, w, h = pos
     bg_h = bg_img.height
     bg_w = bg_img.width
-    # 把前景resize到scale规定的大小
     fg_transform = transforms.Compose([ 
         transforms.Resize((h, w)),
         transforms.ToTensor(),
