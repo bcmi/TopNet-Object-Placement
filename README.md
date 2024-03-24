@@ -13,9 +13,9 @@ Then, install Anaconda and create a virtual environment:
 conda create -n TopNet
 conda activate TopNet
 ```
-Install PyTorch 1.7.0 (higher version should be fine):
+Install PyTorch 2.0.1 (higher version should be fine):
 ```
-conda install pytorch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 cudatoolkit=10.2 -c pytorch
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==0.7.0 cudatoolkit=11.7 -c pytorch
 ```
 Install necessary packages:
 ```
