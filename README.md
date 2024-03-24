@@ -1,5 +1,5 @@
 # TopNet-Object-Placement
-An implementation of the paper "TopNet: Transformer-based Object Placement Network for Image Compositing", CVPR 2023.
+This is an unofficial implementation of the paper "TopNet: Transformer-based Object Placement Network for Image Compositing", CVPR 2023. Its idea is similar to our earlier work [FOPA](https://github.com/bcmi/FOPA-Fast-Object-Placement-Assessment). 
 
 ## Setup
 All the code have been tested on PyTorch 1.7.0. Follow the instructions to run the project.
@@ -48,7 +48,7 @@ We show the results on discriminate task compared with SOPA and FOPA.
 |----------|-------|-------|
 | [SOPA](https://arxiv.org/abs/2107.01889)   | 0.780 | 0.842 |
 | [FOPA](https://arxiv.org/abs/2205.14280)     | 0.776 | 0.840 |
-| **TopNet**   | **0.745** | **0.817** |
+| TopNet   | 0.745 | 0.817 |
 
 ## Evalution on Generation Task
 Following [FOPA](https://arxiv.org/abs/2205.14280), given each background-foreground pair in the test set, we predict 16 rationality score maps for 16 foreground scales and generate composite images with top 50 rationality scores. Then, we randomly sample one from 50 generated composite images per background-foreground pair for Acc and FID evaluation, using the test scripts provided by [GracoNet](https://arxiv.org/abs/2207.11464).
@@ -59,5 +59,5 @@ Following [FOPA](https://arxiv.org/abs/2205.14280), given each background-foregr
 | [GracoNet](https://arxiv.org/abs/2207.11464) | 0.847 | 27.75 |
 | [IOPRE](https://openreview.net/pdf?id=hwHBaL7wur)    | 0.895 | 21.59 |
 | [FOPA](https://arxiv.org/abs/2205.14280)     | 0.932 | 19.76 |
-| **TopNet**   | **0.910** | **23.49** |
+| TopNet   | 0.910 | 23.49 |
 
