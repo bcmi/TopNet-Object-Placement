@@ -19,7 +19,10 @@ Before training, modify "config.py" according to your need. After that, run:
 python train.py
 ```
 ## Test
-
+To get the F1 score and balanced accuracy of a specified model, run:
+```
+python test.py --load_path <PATH_TO_MODEL> 
+```
 ## Evalution on Discriminative Task
 
 ## Evalution on Generation Task
