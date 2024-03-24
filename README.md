@@ -1,16 +1,16 @@
 # TopNet-Object-Placement
 An implementation of the paper "TopNet: Transformer-based Object Placement Network for Image Compositing", CVPR 2023.
 
-# Setup
+## Setup
 
-# Data Preparation
+## Data Preparation
 
-# Training
+## Training
 
-# Test
+## Test
 
-# Multiple Foreground Scales
+## Multiple Foreground Scales
 
-# Evalution on Discriminative Task
+## Evalution on Discriminative Task
 
-# Evalution on Generation Task
+## Evalution on Generation Task
