@@ -43,7 +43,7 @@ To get the F1 score and balanced accuracy of a specified model, run:
 python test.py --load_path <PATH_TO_MODEL> 
 ```
 ## Evalution on Discriminative Task
-| Method   | Acc   | FID   |
+We show the results on discriminate task compared with SOPA and FOPA.
 |----------|-------|-------|
 | [SOPA](https://arxiv.org/abs/2107.01889)   | 0.780 | 0.842 |
 | [FOPA](https://arxiv.org/abs/2205.14280)     | 0.776 | 0.840 |
