@@ -61,3 +61,7 @@ Following [FOPA](https://arxiv.org/abs/2205.14280), given each background-foregr
 | [FOPA](https://arxiv.org/abs/2205.14280)     | 0.932 | 19.76 |
 | TopNet   | 0.910 | 23.49 |
 
+## Other Resources
+
++ [Awesome-Object-Placement](https://github.com/bcmi/Awesome-Object-Placement)
++ [Awesome-Image-Composition](https://github.com/bcmi/Awesome-Image-Composition)
