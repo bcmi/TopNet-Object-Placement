@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ```
 
 ## Data Preparation
-Download and extract data from  [Baidu Cloud](https://pan.baidu.com/s/10JBpXBMZybEl5FTqBlq-hQ)(access code: 4zf9) or [Google Drive](https://drive.google.com/file/d/1VBTCO3QT1hqzXre1wdWlndJR97SI650d/view?pli=1). Put them in "data/data". It should contain the following directories and files:
+Download and extract data from  [Baidu Cloud](https://pan.baidu.com/s/10JBpXBMZybEl5FTqBlq-hQ)(access code: 4zf9) or [Google Drive](https://drive.google.com/file/d/1VBTCO3QT1hqzXre1wdWlndJR97SI650d/view?pli=1). Download the SOPA encoder from [Baidu Cloud](https://pan.baidu.com/s/1hQGm3ryRONRZpNpU66SJZA?_at_=1715224325066) (access code: 1x3n) or [Google Drive](https://drive.google.com/file/d/1DMCINPzrBsxXj_9fTKnzB7mQcd8WQi3T/view). Put them in "data/data". It should contain the following directories and files:
 ```
 <data/data>
   bg/                         # background images
@@ -31,6 +31,7 @@ Download and extract data from  [Baidu Cloud](https://pan.baidu.com/s/10JBpXBMZy
   mask/                       # foreground masks
   train(test)_pair_new.json   # json annotations 
   train(test)_pair_new.csv    # csv files
+  SOPA.pth.tar                # SOPA encoder
 ```
 ## Training
 Before training, modify "config.py" according to your need. After that, run:
