@@ -38,6 +38,7 @@ Before training, modify "config.py" according to your need. After that, run:
 ```
 python train.py
 ```
+You can download our pretrained model from [Baidu Cloud](https://pan.baidu.com/s/1TXsNIG4pRAw-wGQUv3doPA?pwd=jx6u) (access code: jx6u). 
 ## Test
 To get the F1 score and balanced accuracy of a specified model, run:
 ```
