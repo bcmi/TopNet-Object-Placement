@@ -1,4 +1,10 @@
 # TopNet-Object-Placement
+
+Welcome to scan the WeChat QR code to join the discussion group on image composition/compositing, object insertion/addition.
+<p align="center">
+<img width="150" height="150" alt="Image" src="https://github.com/user-attachments/assets/8572a7c4-0f62-4a5f-bc06-9a1d9fcb14e3" />
+</p>
+
 This is an unofficial implementation of the paper "TopNet: Transformer-based Object Placement Network for Image Compositing", CVPR 2023. Its idea is similar to our earlier work [FOPA](https://github.com/bcmi/FOPA-Fast-Object-Placement-Assessment). 
 
 ## Online Demo
